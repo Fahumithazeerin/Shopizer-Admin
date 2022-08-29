@@ -55,6 +55,10 @@ const routes: Routes = [{
       loadChildren: 'app/pages/customers/customer.module#CustomersModule'
     },
     {
+      path: 'seller',
+      loadChildren: 'app/pages/seller/seller.module#SellerModule'
+    },
+    {
       path: 'error-500',
       component: FiveHundredComponent
     },

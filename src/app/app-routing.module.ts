@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: "gallery", component: ImageBrowserComponent },
   { path: "", redirectTo: "pages", pathMatch: "full" },
   { path: "**", redirectTo: "pages" },
+  
 ];
 
 const config: ExtraOptions = {

@@ -496,6 +496,23 @@ export const MENU_ITEMS: MenuItem[] = [
       }
     ]
   },
+  {
+    title: 'COMPONENTS.SELLER_REGISTRATION',
+    key: 'COMPONENTS.SELLER_REGISTRATION',
+    icon: 'people',
+    // pathMatch: 'prefix',
+    hidden: false,
+    //guards: [IsSellerRegistationVisible],
+    children: [
+      {
+        title: 'COMPONENTS.REGISTER',
+        key: 'COMPONENTS.REGISTER',
+        link: '/pages/seller/register',
+        //guards: [IsOrderManagementVisible]
+      }
+    ]
+    
+  },
   // {
   //   title: 'Manage taxes',
   //   // icon: 'fas fa-shopping-cart',

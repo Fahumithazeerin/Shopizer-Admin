@@ -108,7 +108,10 @@
     "CUSTOMER_LIST": "Customer List",
     "MANAGE_OPTIONS": "Manage Options",
     "VARIATIONS_LIST": "Variations List",
-    "ADD_VARIATIONS": "Add Variation"
+    "ADD_VARIATIONS": "Add Variation",
+    "SELLER_REGISTRATION":"Seller portal",
+    "REGISTER":"Register Seller"
+    
   },
   "LOGIN": {
     "INVALID_DATA": "Invalid username or password",
