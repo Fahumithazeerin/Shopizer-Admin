@@ -180,8 +180,6 @@ export class SellerListComponent implements OnInit {
         if (!this.securityService.isAnAdmin()) {
         } else {
           this.router.navigate(['pages/seller/detail-edit/', event.data.code]);
-
-          console.log("Event Store"+event.data.code);
           break;
         }
       case 'remove':
