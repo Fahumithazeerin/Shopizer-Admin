@@ -1,0 +1,36 @@
+<!-- <h2>Registered Seller List</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email Address</th>
+            <th>Company</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let Seller of seller">
+            <td>{{Seller.name}}</td>
+            <td>{{Seller.emailAddress}}</td>
+            <td>{{Seller.company}}</td>
+        </tr>
+    </tbody>
+</table> -->
+<nb-card class="page-card inner_pages">
+    <!-- <div *ngIf="loadingList" class="loading-block" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary"></div> -->
+    <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary" class="sellerList">
+      <div class="inner_pages_legacy">
+        <nb-card-header class="main_header">
+          <h1 class="page_title">{{ 'COMPONENTS.SELLER' | translate }}</h1>
+          <div class="content_spacing_empty"></div>
+  
+        </nb-card-header>
+  
+        <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table">
+        </ng2-smart-table>
+  
+        <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage"
+          [count]="totalCount" class="home-table">
+        </ngx-paginator>
+      </div>
+    </nb-card-body>
+  </nb-card>

@@ -36,6 +36,17 @@ export class StorageService {
     }
     return merchant;
   }
+  getSeller() {
+    let merchant = localStorage.getItem('merchant');
+    if (!merchant) {
+      this.userService.getUser(this.getUserId())
+        .subscribe(user => {
+          merchant = user.merchant;
+          localStorage.setItem('merchant', merchant);
+        });
+    }
+    return merchant;
+  }
 
   getMerchantName() {
     return localStorage.getItem('merchant');

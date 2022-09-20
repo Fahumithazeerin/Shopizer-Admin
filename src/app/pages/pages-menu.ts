@@ -508,7 +508,13 @@ export const MENU_ITEMS: MenuItem[] = [
         title: 'COMPONENTS.REGISTER',
         key: 'COMPONENTS.REGISTER',
         link: '/pages/seller/register',
-        //guards: [IsOrderManagementVisible]
+        guards: [IsSuperadmin]
+      },
+      {
+        title: 'COMPONENTS.REGISTERED_SELLER',
+        key: 'COMPONENTS.REGISTERED_SELLER',
+        link: '/pages/seller/list',
+        guards: [IsSuperadmin, IsAdmin]
       }
     ]
     
