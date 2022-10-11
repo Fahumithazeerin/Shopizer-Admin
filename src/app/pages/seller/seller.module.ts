@@ -10,6 +10,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { SellerListComponent } from './seller-list/seller-list.component';
 import { NbDialogModule } from '@nebular/theme';
 import { SellerDetailEditComponent } from './seller-detail-edit/seller-detail-edit.component';
+import { ProductsComponent } from './seller-products/products.component';
+import { ProductsListComponent } from './seller-products/products-list/products-list.component';
+import { ProductCreationComponent } from './seller-products/product-creation/product-creation.component';
+import { CustomModule } from '../custom-component/custom.module';
+import { ProductFormComponent } from './seller-products/product-form/product-form.component';
+import { NgxSummernoteModule } from 'ngx-summernote';
+import { AvailableButtonComponent } from './seller-products/products-list/available-button.component';
 
 
 @NgModule({
@@ -17,13 +24,22 @@ import { SellerDetailEditComponent } from './seller-detail-edit/seller-detail-ed
     SellerComponent,
     RegisterComponent,
     SellerListComponent,
-    SellerDetailEditComponent
+    SellerDetailEditComponent,
+    ProductsComponent,
+    ProductFormComponent,
+    ProductsListComponent,
+    ProductCreationComponent,
+    AvailableButtonComponent
+  
   ],
+  entryComponents: [AvailableButtonComponent],
   imports: [
     CommonModule,
     SellerRoutingModule,
     SharedModule,
     FormsModule,
+    CustomModule,
+    NgxSummernoteModule,
     HttpClientModule,
     NbDialogModule.forChild()
   ]

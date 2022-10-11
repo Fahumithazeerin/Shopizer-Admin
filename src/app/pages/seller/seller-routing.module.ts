@@ -5,6 +5,8 @@ import { RegisterComponent } from './register/register.component';
 import { SellerDetailEditComponent } from './seller-detail-edit/seller-detail-edit.component';
 import { SellerListComponent } from './seller-list/seller-list.component';
 import { SellerComponent } from './seller.component';
+import { ProductsListComponent } from './seller-products/products-list/products-list.component';
+import { ProductCreationComponent } from './seller-products/product-creation/product-creation.component';
 
 const routes: Routes = [
   {
@@ -25,7 +27,16 @@ const routes: Routes = [
       {
         path: 'detail-edit/:code',
         component: SellerDetailEditComponent,
-      }
+      },
+      {
+        path: 'seller-products/create-product',
+        // canDeactivate: [ExitGuard],
+        component: ProductCreationComponent,
+      },
+      {
+        path: 'seller-products/products-list',
+        component: ProductsListComponent,
+      },
       // {
       //   path: '**',
       //   component: NotFoundComponent
