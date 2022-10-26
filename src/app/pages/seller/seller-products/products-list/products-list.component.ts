@@ -26,6 +26,8 @@ import { StorageService } from '../../../shared/services/storage.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { ListingService } from '../../../shared/services/listing.service';
+import { forkJoin } from 'rxjs';
+import { SellerService } from '../../seller.service';
 
 
 @Component({
@@ -40,6 +42,8 @@ export class ProductsListComponent implements OnInit {
   loadingList = false;
   loading: boolean = false;
   stores = [];
+  productTypes = [];
+  sellers = [];
   isSuperadmin: boolean;
   selectedStore: String = '';
   // paginator
@@ -60,7 +64,8 @@ export class ProductsListComponent implements OnInit {
     private translate: TranslateService,
     private storageService: StorageService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private sellerService: SellerService
   ) {
     this.selectedStore = this.storageService.getMerchant()
     this.isSuperadmin = this.storageService.getUserRoles().isSuperadmin;
@@ -83,6 +88,16 @@ export class ProductsListComponent implements OnInit {
     this.translate.onLangChange.subscribe((lang) => {
       this.params.lang = this.storageService.getLanguage();
       this.getList();
+    // //const types$ = this.productService.getProductTypes();
+    // const sellers$ = this.sellerService.getListOfStores(this.params);
+    // console.log(sellers$);
+    // // forkJoin([types$])
+    // //   .subscribe(([productTypes]) => {
+    // //       productTypes.list.forEach((option) => {
+    // //       this.productTypes.push({ value: option.code, label: option.code });
+    // //     });
+    // //   });
+    
     });
 
 
@@ -241,6 +256,12 @@ export class ProductsListComponent implements OnInit {
   }
 
   choseStore(event) {
+    this.params.store = event;
+    this.getList();
+
+  }
+
+  choseSeller(event) {
     this.params.store = event;
     this.getList();
 

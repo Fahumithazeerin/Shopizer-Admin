@@ -10,8 +10,16 @@
           <div class="filter_left_section">
           </div>
           <div class="filter_right_section">
-            <ngx-store-autocomplete (onStore)="choseStore($event)"></ngx-store-autocomplete> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <ngx-store-autocomplete (onStore)="choseSeller($event)"></ngx-store-autocomplete>
+
+            
+              <!-- <p-dropdown [options]="productTypes" placeholder="{{ 'SELLER' | translate}}"
+                formControlName='type' filter="true">
+                <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+                <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
+              </p-dropdown> -->
+          
+
+            <ngx-seller-autocomplete (onStore)="choseSeller($event)"></ngx-seller-autocomplete> 
               <a class="createBtn" [routerLink]="['/pages/seller/seller-products/create-product']">
                 <img class="pointer sda add" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_PRODUCT' | translate}}"
                   alt="">

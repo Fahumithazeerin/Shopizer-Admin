@@ -4,11 +4,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { SellerService } from '../../seller/seller.service';
 
 @Component({
-    selector: 'ngx-store-autocomplete',
-    templateUrl: './store-autocomplete.html',
-    styleUrls: ['./store-autocomplete.scss']
+    selector: 'ngx-seller-autocomplete',
+    templateUrl: './seller-autocomplete.html',
+    styleUrls: ['./seller-autocomplete.scss']
 })
-export class storeAutoCompleteComponent implements OnInit {
+export class sellerAutoCompleteComponent implements OnInit {
 
 
     @Output() onStore: EventEmitter<any> = new EventEmitter();
@@ -35,7 +35,7 @@ export class storeAutoCompleteComponent implements OnInit {
     }
 
     searchSeller() {
-        this.sellerService.getListOfStores({ code: '' })
+        this.sellerService.getListOfStores({ code: 'DEFAULT' })
             .subscribe(res => {
                 let storeData = []
                 res.data.forEach((store) => {
