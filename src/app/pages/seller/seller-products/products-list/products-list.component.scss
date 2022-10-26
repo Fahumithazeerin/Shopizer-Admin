@@ -111,6 +111,30 @@
       }
     }
 
+
+    .createBtns {
+      padding: 8px 10px 9.5px 10px;
+      background-color: lightgrey!important;
+      border: 1px solid #edf1f7 !important;
+      color: grey!important;
+      border-radius: 5px;
+      margin-left: 20px;
+      pointer-events: none;
+      opacity: 40px;
+      cursor: none;
+
+      label {
+        display: inline-block;
+        font-weight: 600 !important;
+        font-size: 14px !important;
+      }
+
+      .sda {
+        margin-right: 20px;
+        margin-left: 0 !important;
+      }
+    }
+
     .store_select {
       width: 29% !important
     }

@@ -76,7 +76,13 @@ export class ConfigService {
   //  return JSON.parse(localStorage.getItem('supportedLanguages'));
   //}
 
+  getListOfSellerSupportedLanguages(seller: string) {
+    const params = {
+      'seller': seller
+    };
+     return this.crudService.get(`/v1/seller/languages`, params)
 
+  }
   getListOfSystemSupportedLanguages() {
     return this.crudService.get(`/v1/languages`).subscribe((languages) => {
       this.languages = [...languages];
