@@ -11,9 +11,7 @@
           <div class="filter_left_section">
           </div>
           <div class="filter_right_section">
-            <ngx-store-autocomplete (onStore)="choseStore($event)"></ngx-store-autocomplete> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <ngx-store-autocomplete (onStore)="choseSeller($event)"></ngx-store-autocomplete>
-              <a class="createBtn" [routerLink]="['/pages/seller/seller-products/create-product']" >
+              <a class="createBtn" [routerLink]="['/pages/seller/seller-products/create-product']">
                 <img class="pointer sda add" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_PRODUCT' | translate}}"
                   alt="">
                 <label>{{ 'COMPONENTS.CREATE_PRODUCT' | translate}}</label>
@@ -26,8 +24,7 @@
           <div class="filter_left_section">
           </div>
           <div class="filter_right_section">
-            <ngx-store-autocomplete (onStore)="choseStore($event)"></ngx-store-autocomplete> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <ngx-store-autocomplete (onStore)="choseSeller($event)"></ngx-store-autocomplete>
+            <ngx-seller-autocomplete (onStore)="choseSeller($event)"></ngx-seller-autocomplete> 
               <a class="createBtns" [routerLink]="['/pages/seller/seller-products/create-product']" >
                 <img class="pointer sda add" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_PRODUCT' | translate}}"
                   alt="">

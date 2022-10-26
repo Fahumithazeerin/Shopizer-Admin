@@ -27,6 +27,9 @@ import { StorageService } from '../../../shared/services/storage.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { ListingService } from '../../../shared/services/listing.service';
+import { forkJoin } from 'rxjs';
+import { Console } from 'console';
+import { event } from 'jquery';
 
 
 @Component({
@@ -41,6 +44,7 @@ export class ProductsListComponent implements OnInit {
   loadingList = false;
   loading: boolean = false;
   sellers = [];
+  productTypes=[];
   isSuperadmin: boolean;
   isAdmin: boolean;
   selectedStore: String = '';
@@ -63,7 +67,7 @@ export class ProductsListComponent implements OnInit {
     private translate: TranslateService,
     private storageService: StorageService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
   ) {
     this.selectedStore = this.storageService.getSellerId()
     this.isSuperadmin = this.storageService.getUserRoles().isSuperadmin;
@@ -99,6 +103,16 @@ export class ProductsListComponent implements OnInit {
     this.translate.onLangChange.subscribe((lang) => {
       this.params.lang = this.storageService.getLanguage();
       this.getList();
+    // //const types$ = this.productService.getProductTypes();
+    // const sellers$ = this.sellerService.getListOfStores(this.params);
+    // console.log(sellers$);
+    // // forkJoin([types$])
+    // //   .subscribe(([productTypes]) => {
+    // //       productTypes.list.forEach((option) => {
+    // //       this.productTypes.push({ value: option.code, label: option.code });
+    // //     });
+    // //   });
+    
     });
 
 
@@ -110,8 +124,10 @@ export class ProductsListComponent implements OnInit {
     });
   }
 
+  
   fetchTableData(){
     this.loadingList = true;
+
     this.productService.getListOfProducts(this.params)
       .subscribe(res => {
         const products = res.products;
@@ -123,6 +139,7 @@ export class ProductsListComponent implements OnInit {
         this.source.load(products);
         this.loadingList = false;
       });
+    
 
  }
 
@@ -257,6 +274,12 @@ export class ProductsListComponent implements OnInit {
   }
 
   choseStore(event) {
+    this.params.seller = event;
+    this.getList();
+
+  }
+
+  choseSeller(event) {
     this.params.seller = event;
     this.getList();
 

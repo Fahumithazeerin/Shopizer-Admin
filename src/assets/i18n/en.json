@@ -498,6 +498,7 @@
     "DETAILS": "Customer details"
   },
   "REGISTER_FORM": {
+    "SELLER": "seller",
     "SELLER_NAME": "Seller name",
     "SELLER_NAME_REQUIRED": "Seller name is required.",
     "SELLER_CODE": "Unique Seller Code",

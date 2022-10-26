@@ -24,14 +24,14 @@ export class ProductService {
   }
 
   updateProductFromTable(id, product): Observable<any> {
-    return this.crudService.patch(`/v1/private/product/${id}`, product);
+    return this.crudService.patch(`/v1/private/seller/product/${id}`, product);
   }
 
   updateProduct(id, product): Observable<any> {
     const params = {
       seller: this.storageService.getMerchant()
     };
-    return this.crudService.put(`/v2/private/product/definition/${id}`, product, { params });
+    return this.crudService.put(`/v2/private/seller/product/definition/${id}`, product, { params });
   }
 
   getProductById(id): Observable<any> {

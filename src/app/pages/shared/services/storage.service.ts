@@ -48,6 +48,12 @@ export class StorageService {
     return seller;
   }
 
+getSellerEvent(event)
+{
+    return this.userService.getSeller(event);
+
+}  
+
   getSellerId()
   {
     return localStorage.getItem('userId');
