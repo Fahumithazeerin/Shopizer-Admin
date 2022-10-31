@@ -7,7 +7,7 @@ import { SellerListComponent } from './seller-list/seller-list.component';
 import { SellerComponent } from './seller.component';
 import { ProductsListComponent } from './seller-products/products-list/products-list.component';
 import { ProductCreationComponent } from './seller-products/product-creation/product-creation.component';
-
+import { ProductOrderListComponent } from './order-management/order-management.component';
 const routes: Routes = [
   {
     path: '', component: SellerComponent, children: [
@@ -36,6 +36,10 @@ const routes: Routes = [
       {
         path: 'seller-products/products-list',
         component: ProductsListComponent,
+      },
+      {
+        path: 'order-list',
+        component: ProductOrderListComponent,
       },
       // {
       //   path: '**',

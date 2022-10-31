@@ -529,6 +529,20 @@ export const MENU_ITEMS: MenuItem[] = [
             guards: [IsAdmin]
           }
         ]
+      },
+      {
+        title: 'COMPONENTS.ORDER_MANAGEMENT',
+        key: 'COMPONENTS.ORDERS',
+        link: '/pages/seller/order-list',
+        guards: [IsAdmin],
+        children: [ 
+          {
+            title: 'COMPONENTS.ORDER_MANAGEMENT',
+            key: 'COMPONENTS.ORDERS',
+            link: '/pages/seller/order-list',
+            guards: [IsAdmin]
+          }
+        ]
       }
     ]
     
