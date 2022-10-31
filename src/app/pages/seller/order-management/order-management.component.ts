@@ -10,7 +10,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { error } from '@angular/compiler/src/util';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import * as internal from 'stream';
-import { object }  from './order-variable.component';
 
 @Component({
   selector: 'ngx-order-management',
