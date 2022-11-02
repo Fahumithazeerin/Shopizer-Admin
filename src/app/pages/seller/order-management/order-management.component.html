@@ -19,11 +19,15 @@
                 </nb-card-header>
                 
                 <mat-tab-group (selectedTabChange)="tabChanged($event)">
-                    <mat-tab label="Open"> 
-
-                       
-                        
-
+                    <mat-tab label="Open">
+                   <br>
+                        <button *ngFor="let button of buttons" class="btn btn-dark" nbButton size="small"
+                                [ngClass]="(selectedButton == button) ? 'active' : 'inactive'" (click)="toggleSelect(button)">
+                            <i [class]="button.class"></i>
+                            {{button.name}}
+                        </button>
+                        &nbsp;
+                       <!-- <button (click)="toggle()" id="due" nbButton outline  size="small" >Due Today</button>-->
                 <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table">
                 </ng2-smart-table>
           

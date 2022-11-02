@@ -14,6 +14,11 @@
 .style{
     border: 8px solid blue;
 }
+ .active{   color:black !important;
+
+                 }
+.inactive{   color:grey !important;
+                 }
 .page-card {
     background: transparent;
     border: none;
@@ -81,7 +86,10 @@
         }
     }
 }
+.btn{
+    margin: 5px !important;
 
+}
 .buttons-row {
     float: right;
 }
