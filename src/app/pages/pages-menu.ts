@@ -526,7 +526,7 @@ export const MENU_ITEMS: MenuItem[] = [
             title: 'COMPONENTS.PRODUCTS_LIST',
             key: 'COMPONENTS.PRODUCTS_LIST',
             link: '/pages/seller/seller-products/products-list',
-            guards: [IsOrderManagementVisible]
+            guards: [IsAdmin]
           }
         ]
       }
