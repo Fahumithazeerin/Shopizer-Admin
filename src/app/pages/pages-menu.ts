@@ -520,8 +520,8 @@ export const MENU_ITEMS: MenuItem[] = [
         title: 'COMPONENTS.PRODUCT_LISTING',
         key: 'COMPONENTS.PRODUCT_LISTING',
         link: '/pages/seller/list',
-        guards: [IsSuperadmin, IsAdmin],
-        children: [
+        guards: [IsAdmin],
+        children: [ 
           {
             title: 'COMPONENTS.PRODUCTS_LIST',
             key: 'COMPONENTS.PRODUCTS_LIST',

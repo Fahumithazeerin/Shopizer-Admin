@@ -5,21 +5,12 @@
           <h1 class="page_title">{{ 'COMPONENTS.PRODUCTS' | translate }}</h1>
           <div class="content_spacing_empty"></div>
         </nb-card-header>
-  
+       
+        <div *ngIf="disabled(); else elseBlock">
         <form class="form-inline filter_section">
           <div class="filter_left_section">
           </div>
           <div class="filter_right_section">
-
-            
-              <!-- <p-dropdown [options]="productTypes" placeholder="{{ 'SELLER' | translate}}"
-                formControlName='type' filter="true">
-                <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
-                <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
-              </p-dropdown> -->
-          
-
-            <ngx-seller-autocomplete (onStore)="choseSeller($event)"></ngx-seller-autocomplete> 
               <a class="createBtn" [routerLink]="['/pages/seller/seller-products/create-product']">
                 <img class="pointer sda add" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_PRODUCT' | translate}}"
                   alt="">
@@ -27,6 +18,22 @@
               </a>
           </div>
         </form>
+      </div>
+      <ng-template #elseBlock>
+        <form class="form-inline filter_section">
+          <div class="filter_left_section">
+          </div>
+          <div class="filter_right_section">
+            <ngx-seller-autocomplete (onStore)="choseSeller($event)"></ngx-seller-autocomplete> 
+              <a class="createBtns" [routerLink]="['/pages/seller/seller-products/create-product']" >
+                <img class="pointer sda add" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_PRODUCT' | translate}}"
+                  alt="">
+                <label>{{ 'COMPONENTS.CREATE_PRODUCT' | translate}}</label>
+              </a>
+          </div>
+        </form>
+      </ng-template>
+
   
         <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table"></ng2-smart-table>
         <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage"

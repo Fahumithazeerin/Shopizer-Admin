@@ -18,6 +18,7 @@ import { StorageService } from '../../../shared/services/storage.service';
 import { Image } from '../../../shared/models/image';
 import { ImageBrowserComponent } from '../../../../@theme/components/image-browser/image-browser.component';
 import { threadId } from 'worker_threads';
+import { disableDebugTools } from '@angular/platform-browser';
 declare var jquery: any;
 declare var $: any;
 
@@ -125,7 +126,8 @@ export class ProductFormComponent implements OnInit {
 
     this.loadEvent();
 
-    const manufacture$ = this.manufactureService.getManufacturers();
+
+    const manufacture$ = this.manufactureService.getSellerProductManufacturers();
     const types$ = this.productService.getProductTypes();
     const config$ = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'));
 
@@ -159,7 +161,7 @@ export class ProductFormComponent implements OnInit {
     }
 
   }
-
+  
   private loadEvent() {
     this.loading = true;
     this.loaded = false;
@@ -171,6 +173,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   private createForm() {
+
     this.form = this.fb.group({
       identifier: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
       visible: [false],
@@ -343,7 +346,7 @@ export class ProductFormComponent implements OnInit {
   checkSku(event) {
     this.loading = true;
     this.productService.checkProductSku(event.target.value)
-      .subscribe(res => {
+    .subscribe(res => {
         this.isCodeUnique = !(res.exists && (this.product.identifier !== event.target.value));
         this.loading = false;
       });

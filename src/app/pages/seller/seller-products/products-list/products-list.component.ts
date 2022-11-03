@@ -20,6 +20,7 @@ import { AvailableButtonComponent } from './available-button.component';
 import { ShowcaseDialogComponent } from '../../../shared/components/showcase-dialog/showcase-dialog.component';
 import { NbDialogService } from '@nebular/theme';
 import { StoreService } from '../../../store-management/services/store.service';
+import { SellerService } from '../../seller.service';
 import { UserService } from '../../../shared/services/user.service';
 import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from '../../../shared/services/storage.service';
@@ -27,7 +28,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { ListingService } from '../../../shared/services/listing.service';
 import { forkJoin } from 'rxjs';
-import { SellerService } from '../../seller.service';
+import { Console } from 'console';
+import { event } from 'jquery';
 
 
 @Component({
@@ -41,10 +43,10 @@ export class ProductsListComponent implements OnInit {
   listingService: ListingService;
   loadingList = false;
   loading: boolean = false;
-  stores = [];
-  productTypes = [];
   sellers = [];
+  productTypes=[];
   isSuperadmin: boolean;
+  isAdmin: boolean;
   selectedStore: String = '';
   // paginator
   perPage = 20;
@@ -60,21 +62,22 @@ export class ProductsListComponent implements OnInit {
     private userService: UserService,
     private productService: ProductService,
     private dialogService: NbDialogService,
-    private storeService: StoreService,
+    //private storeService: StoreService,
+    private sellerService: SellerService,
     private translate: TranslateService,
     private storageService: StorageService,
     private toastr: ToastrService,
     private router: Router,
-    private sellerService: SellerService
   ) {
-    this.selectedStore = this.storageService.getMerchant()
+    this.selectedStore = this.storageService.getSellerId()
     this.isSuperadmin = this.storageService.getUserRoles().isSuperadmin;
+    this.isAdmin = this.storageService.getUserRoles().isAdmin;
     this.listingService = new ListingService();
   }
 
   loadParams() {
     return {
-      store: this.storageService.getMerchant(),
+      seller: this.storageService.getSellerId(),
       lang: this.storageService.getLanguage(),
       count: this.perPage,
       origin: "admin", //does not load attributes in listing
@@ -82,7 +85,19 @@ export class ProductsListComponent implements OnInit {
     };
   }
 
+  private disabled()
+  {
+    if(this.isSuperadmin == true)
+    {
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
   ngOnInit() {
+    this.disabled();
     this.getStore();
     this.getList();
     this.translate.onLangChange.subscribe((lang) => {
@@ -109,8 +124,10 @@ export class ProductsListComponent implements OnInit {
     });
   }
 
+  
   fetchTableData(){
     this.loadingList = true;
+
     this.productService.getListOfProducts(this.params)
       .subscribe(res => {
         const products = res.products;
@@ -122,6 +139,7 @@ export class ProductsListComponent implements OnInit {
         this.source.load(products);
         this.loadingList = false;
       });
+    
 
  }
 
@@ -140,13 +158,13 @@ export class ProductsListComponent implements OnInit {
   /** */
 
   getStore() {
-    this.storeService.getListOfStores({ code: 'DEFAULT' })
+    this.productService.getListOfProducts({ code: 'DEFAULT' })
       .subscribe(res => {
-        let storeData = []
-        res.data.forEach((store) => {
-          storeData.push(store.code);
+        let sellerData = []
+        res.data.forEach((seller) => {
+          sellerData.push(seller.code);
         });
-        this.stores = storeData;
+        this.sellers = sellerData;
       });
   }
   getList() {
@@ -256,13 +274,13 @@ export class ProductsListComponent implements OnInit {
   }
 
   choseStore(event) {
-    this.params.store = event;
+    this.params.seller = event;
     this.getList();
 
   }
 
   choseSeller(event) {
-    this.params.store = event;
+    this.params.seller = event;
     this.getList();
 
   }

@@ -31,6 +31,9 @@ export class SellerService {
     };
     return this.crudService.get(`/v1/private/seller/unique`, params);
   }
+  getSellerIdByCode(code){
+    return this.crudService.get(`v1/private/seller/id/${code}`);
+  }
   deleteStore(sellerCode: any): Observable<any> {
     return this.crudService.delete(`/v1/private/seller/${ sellerCode }`);
   }
