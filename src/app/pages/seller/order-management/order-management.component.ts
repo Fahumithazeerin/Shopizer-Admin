@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation ,Inject} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { StorageService } from '../../shared/services/storage.service';
 import { StoreService } from '../../store-management/services/store.service';
@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { error } from '@angular/compiler/src/util';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
+import { DOCUMENT } from '@angular/common';
+
 import * as internal from 'stream';
 
 @Component({
@@ -32,10 +34,11 @@ export class ProductOrderListComponent implements OnInit {
   // searchValue: string = '';
   isSuperAdmin: boolean;
   timeoutHandler: any;
-  
+  isPast=true;
   params = this.loadParams();
 
   constructor(
+  @Inject(DOCUMENT) private document: Document,
     private ordersService: OrdersService,
     private router: Router,
     // private mScrollbarService: MalihuScrollbarService,
@@ -94,7 +97,40 @@ export class ProductOrderListComponent implements OnInit {
 
     });
   }
-  
+buttons= [
+  {class: "fa fa-long-arrow-up", name: "Past Due"},
+  {class: "fa fa-long-arrow-down", name: "Due Today"},
+]
+selectedButton;
+toggleSelect(button) {
+
+    if (button == this.selectedButton) {
+        this.selectedButton = undefined
+    } else {
+        this.selectedButton = button
+    }
+}
+//   toggle()
+//   {
+//         const past =  this.document.getElementById("past");
+//         const due = this.document.getElementById("due");
+//         console.log(due.innerHTML);
+//
+//         if(!past.classList.contains("active") && this.isPast){
+//             past.classList.add("active");
+//             due.classList.remove("active");
+//         }
+//         else{
+//         this.isPast = false
+//         }
+//        if(!due.classList.contains("active") && !this.isPast){
+//             due.classList.add("active");
+//             past.classList.remove("active");
+//         }else
+//         {
+//         this.isPast=true;
+//         }
+//     }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {  
     console.log('tabChangeEvent => ', tabChangeEvent);
     console.log('index => ', tabChangeEvent.index);
