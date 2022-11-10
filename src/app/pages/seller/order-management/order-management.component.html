@@ -28,15 +28,16 @@
                         </button>
                         &nbsp;
                        <!-- <button (click)="toggle()" id="due" nbButton outline  size="small" >Due Today</button>-->
-                <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table">
+                <ng2-smart-table [settings]="settings" [source]="opensource" (custom)="route($event)" class="home-table">
                 </ng2-smart-table>
-          
+                
                 <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage"
                   [count]="totalCount" class="home-table">
+                 
                 </ngx-paginator>
                 </mat-tab>
                     <mat-tab label="Closed">
-                    <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table">
+                    <ng2-smart-table [settings]="settings" [source]="closedsource" (custom)="route($event)" class="home-table">
                     </ng2-smart-table>
               
                     <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage"

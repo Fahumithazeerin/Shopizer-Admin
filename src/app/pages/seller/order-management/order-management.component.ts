@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation ,Inj
 import { DatePipe } from '@angular/common';
 import { StorageService } from '../../shared/services/storage.service';
 import { StoreService } from '../../store-management/services/store.service';
-import { OrdersService } from '../services/orders.service';
+import { SellerOrderService } from '../../shared/services/seller-order.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Router } from '@angular/router';
 // import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
@@ -21,7 +21,8 @@ import * as internal from 'stream';
 })
 export class ProductOrderListComponent implements OnInit {
   @ViewChild('item', { static: false }) accordion;
-  source: LocalDataSource = new LocalDataSource();
+  opensource: LocalDataSource = new LocalDataSource(); 
+  closedsource: LocalDataSource = new LocalDataSource();
   loadingList = false;
   settings = {};
   stores: Array<any> = [];
@@ -39,7 +40,7 @@ export class ProductOrderListComponent implements OnInit {
 
   constructor(
   @Inject(DOCUMENT) private document: Document,
-    private ordersService: OrdersService,
+    private ordersService: SellerOrderService,
     private router: Router,
     // private mScrollbarService: MalihuScrollbarService,
     private translate: TranslateService,
@@ -62,10 +63,10 @@ export class ProductOrderListComponent implements OnInit {
   ngOnInit() {
     this.getOrderList();
     this.translate.onLangChange.subscribe((lang) => {
-      this.params.lang = this.storageService.getLanguage();
+     
       this.getOrderList();
     });
-    this.source.onChanged().subscribe((change) => {
+    this.opensource.onChanged().subscribe((change) => {
       if (change.action == 'refresh' || change.action == 'load') {
         clearTimeout(this.timeoutHandler);
       } else {
@@ -139,8 +140,6 @@ toggleSelect(button) {
   }
   loadParams() {
     return {
-      store: this.storageService.getMerchant(),
-      lang: this.storageService.getLanguage(),
       count: this.perPage,
       page: 0
     };
@@ -149,18 +148,32 @@ toggleSelect(button) {
     this.params.page = this.currentPage;
 
     this.loadingList = true;
-    this.ordersService.getOrders(this.params)
+    this.ordersService.getsOrders()
       .subscribe(orders => {
         this.loadingList = false;
+        console.log(orders);
         if (orders.orders && orders.orders.length !== 0) {
-          this.source.load(orders.orders);
+          var all_orders = orders.orders
+          var openorders = all_orders.filter(a=>a.orderStatus !== 'CANCELED')
+          if(openorders && openorders.length !== 0)
+            this.opensource.load(openorders);
+          else
+            this.opensource.load([]);
+          var closedorders = all_orders.filter(a=>a.orderStatus === 'CANCELED')
+          if(closedorders && closedorders.length !== 0)
+            this.closedsource.load(closedorders);
+          else
+          this.closedsource.load([]);
         } else {
-          this.source.load([]);
+          this.closedsource.load([]);
+          this.opensource.load([]);
         }
-        this.totalCount = orders.recordsTotal;
+        this.totalCount = orders.total;
+        console.log("Hi"+ this.totalCount)
       }, error => {
+        
         this.loadingList = false;
-        this.source.load([]);
+        this.opensource.load([]);
       });
     this.setSettings();
   }
@@ -263,9 +276,7 @@ toggleSelect(button) {
             ] :  [
                 { value: 'ORDERED', title: this.translate.instant('ORDER.ORDERED') },
                 { value: 'PROCESSED', title: this.translate.instant('ORDER.PROCESSED') },
-                { value: 'DELIVERED', title: this.translate.instant('ORDER.DELIVERED') },
                 { value: 'REFUNDED', title: this.translate.instant('ORDER.REFUNDED') },
-                { value: 'CANCELED', title: this.translate.instant('ORDER.CANCELED') },
               ]
              
             }

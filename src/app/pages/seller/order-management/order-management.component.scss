@@ -57,8 +57,10 @@
             }
         }
     }
+    
 
     .home-table {
+        height: 50vh;
         thead {
             .ng2-smart-titles {
                 th {
@@ -132,4 +134,9 @@ tbody {
     /* Trigger vertical scroll    */
     overflow-x: hidden;
     /* Hide the horizontal scroll */
+}
+
+.home-table table tbody {
+    border: 0px;
+    height: fit-content;
 }

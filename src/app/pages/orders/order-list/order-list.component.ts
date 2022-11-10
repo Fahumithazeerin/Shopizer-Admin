@@ -106,15 +106,18 @@ export class OrderListComponent implements OnInit {
       .subscribe(orders => {
         this.loadingList = false;
         if (orders.orders && orders.orders.length !== 0) {
+          console.log(orders)
           this.source.load(orders.orders);
         } else {
           this.source.load([]);
         }
-        this.totalCount = orders.recordsTotal;
+
+        this.totalCount = (orders.length);
       }, error => {
         this.loadingList = false;
         this.source.load([]);
       });
+
     this.setSettings();
   }
 
@@ -251,7 +254,10 @@ export class OrderListComponent implements OnInit {
   }
 
   onSelectStore(e) {
-    this.params["store"] = e.value;
+    console.log("Hi")
+    console.log(e.value)
+    this.params["store"] = e;
+
     this.getOrderList();
   }
 

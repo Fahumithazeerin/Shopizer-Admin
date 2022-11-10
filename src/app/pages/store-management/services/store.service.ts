@@ -24,6 +24,7 @@ export class StoreService {
   }
 
   getListOfStores(params): Observable<any> {
+    
     return this.crudService.get(`/v1/private/stores`, params);
   }
 
