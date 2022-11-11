@@ -106,7 +106,6 @@ export class OrderListComponent implements OnInit {
       .subscribe(orders => {
         this.loadingList = false;
         if (orders.orders && orders.orders.length !== 0) {
-          console.log(orders)
           this.source.load(orders.orders);
         } else {
           this.source.load([]);
@@ -254,8 +253,6 @@ export class OrderListComponent implements OnInit {
   }
 
   onSelectStore(e) {
-    console.log("Hi")
-    console.log(e.value)
     this.params["store"] = e;
 
     this.getOrderList();

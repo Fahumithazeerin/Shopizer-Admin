@@ -20,8 +20,6 @@ export class OrdersService {
     //   'count': '50',
     //   'start': '0'arams
     // };
-    console.log(params)
-    console.log(this.crudService.get('/v1/private/orders', params))
     return this.crudService.get('/v1/private/orders', params);
   }
   getOrderDetails(orderID): Observable<any> {

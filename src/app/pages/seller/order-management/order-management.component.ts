@@ -63,7 +63,6 @@ export class ProductOrderListComponent implements OnInit {
   ngOnInit() {
     this.getOrderList();
     this.translate.onLangChange.subscribe((lang) => {
-     
       this.getOrderList();
     });
     this.opensource.onChanged().subscribe((change) => {
@@ -133,8 +132,6 @@ toggleSelect(button) {
 //         }
 //     }
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {  
-    console.log('tabChangeEvent => ', tabChangeEvent);
-    console.log('index => ', tabChangeEvent.index);
     let index = tabChangeEvent.index;
     this.setSettings(index);
   }
@@ -151,15 +148,14 @@ toggleSelect(button) {
     this.ordersService.getsOrders()
       .subscribe(orders => {
         this.loadingList = false;
-        console.log(orders);
         if (orders.orders && orders.orders.length !== 0) {
           var all_orders = orders.orders
-          var openorders = all_orders.filter(a=>a.orderStatus !== 'CANCELED')
+          var openorders = all_orders.filter(a=>!(a.orderStatus === 'CANCELED' || a.orderStatus === 'DELIVERED') )
           if(openorders && openorders.length !== 0)
             this.opensource.load(openorders);
           else
             this.opensource.load([]);
-          var closedorders = all_orders.filter(a=>a.orderStatus === 'CANCELED')
+          var closedorders = all_orders.filter(a=>a.orderStatus === 'CANCELED' || a.orderStatus === 'DELIVERED')
           if(closedorders && closedorders.length !== 0)
             this.closedsource.load(closedorders);
           else
@@ -169,7 +165,6 @@ toggleSelect(button) {
           this.opensource.load([]);
         }
         this.totalCount = orders.total;
-        console.log("Hi"+ this.totalCount)
       }, error => {
         
         this.loadingList = false;
