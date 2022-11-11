@@ -1,6 +1,7 @@
 import { Component, forwardRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { StoreService } from '../../store-management/services/store.service';
 import { TranslateService } from '@ngx-translate/core';
+import { SellerService } from '../../seller/seller.service';
 
 @Component({
     selector: 'ngx-store-autocomplete',
@@ -17,6 +18,7 @@ export class storeAutoCompleteComponent implements OnInit {
 
     constructor(
         private storeService: StoreService,
+        private sellerService: SellerService,
         private translate: TranslateService) { }
 
     ngOnInit() { }
@@ -31,6 +33,18 @@ export class storeAutoCompleteComponent implements OnInit {
                 this._stores = storeData;
             });
     }
+
+    searchSeller() {
+        this.sellerService.getListOfStores({ code: '' })
+            .subscribe(res => {
+                let storeData = []
+                res.data.forEach((store) => {
+                    storeData.push(store.code);
+                });
+                this._stores = storeData;
+            });
+    }
+
     onSelectStore(event) {
         this.onStore.emit(event);
     }

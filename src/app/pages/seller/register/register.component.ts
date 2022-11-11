@@ -394,11 +394,11 @@ export class RegisterComponent implements OnInit {
           if (res.exist) {
             this.toastr.success(this.translate.instant('COMMON.CODE_EXISTS'));
           } else {
-      
             this.sellerService.registerSeller(storeObj)
               .subscribe(store => {
                 this.toastr.success(this.translate.instant('REGISTER_FORM.SELLER_CREATED'));
                 this.router.navigate(['/']);
+               
               });
         
           }

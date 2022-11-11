@@ -184,7 +184,7 @@ export class SellerListComponent implements OnInit {
         }
       case 'remove':
         var code = event.data.code;
-        var sellerCode = this.storageService.getSeller();
+        var sellerCode = this.storageService.getMerchant();
         if (code === sellerCode) {
           this.dialogService.open(ShowcaseDialogComponent, {
             context: {

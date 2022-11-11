@@ -1,38 +1,15 @@
- <!-- <div  class="container col-md-6"> 
- <h5 style="text-align: left; color: black; font-family: 'Times New Roman', Times, serif;">Seller Registration</h5>
-<form (ngSubmit)="sellerRegister()">
-    <div class="mb-3" >
-        <label for="inputName1" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" name="name" 
-           placeholder="Enter Your Name" [(ngModel)] = "seller.name">
-      </div>
-    <div class="mb-3">
-      <label for="inputEmail1" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="emailAddress" name="emailAddress" 
-          placeholder="Enter Your Email Address" [(ngModel)] = "seller.emailAddress" required>
-    </div>
-    <div class="mb-3">
-        <label for="inputCompanyName1" class="form-label">Company Name</label>
-        <input type="text" class="form-control" id="company" name="company" 
-               placeholder="Enter Your Company Name" [(ngModel)] = "seller.company" required>
-      </div>
-    
-    <button type="submit" class="btn btn-primary">Register</button>
-  </form>
-</div>  -->
-
-<div class="inner_pages storeManagement">
+<div class="inner_pages sellerManagement">
 
   <nb-card-header class="main_header">
     <h1 class="page_title">{{ title | translate }}</h1>
 
-    <div class="content_spacing">
+    <!-- <div class="content_spacing">
       <nb-select [(selected)]="selectedItem" outline shape="rectangle" class="headerDropdown">
         <nb-option *ngFor="let item of sidemenuLinks" [value]="item.id" (click)="onClickRoute(item.link)">{{ item.title
           }}
         </nb-option>
       </nb-select>
-    </div>
+    </div> -->
     <div class="content_spacing" *ngIf="isCancel == '0'">
       <button type="button" nbButton class="cancel_button" (click)="goToBack()">{{ 'ORDER_FORM.CANCLE'
         | translate}}</button>
@@ -45,7 +22,7 @@
     </div>
   </nb-card-header>
 
-  <form [formGroup]='form' *ngIf="!loading" class="storeManagement">
+  <form [formGroup]='form' *ngIf="!loading" class="sellerManagement">
     <nb-card class="nb-card inline-form-card">
       <nb-card-body>
         <div class="form-group">

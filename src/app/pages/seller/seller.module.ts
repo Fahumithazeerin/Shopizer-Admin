@@ -12,18 +12,31 @@ import { NbDialogModule } from '@nebular/theme';
 import { SellerDetailEditComponent } from './seller-detail-edit/seller-detail-edit.component';
 
 
+import { CustomModule } from '../custom-component/custom.module';
+
+import { NgxSummernoteModule } from 'ngx-summernote';
+import { AvailableButtonComponent } from './seller-products/products-list/available-button.component';
+
+
+
+
 @NgModule({
   declarations: [
     SellerComponent,
     RegisterComponent,
     SellerListComponent,
-    SellerDetailEditComponent
+    SellerDetailEditComponent,
+
+    
   ],
+  //entryComponents: [AvailableButtonComponent],
   imports: [
     CommonModule,
     SellerRoutingModule,
     SharedModule,
     FormsModule,
+    CustomModule,
+    NgxSummernoteModule,
     HttpClientModule,
     NbDialogModule.forChild()
   ]

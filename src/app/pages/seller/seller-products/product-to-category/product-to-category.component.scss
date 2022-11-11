@@ -1,0 +1,74 @@
+.label-row {
+    margin-bottom: 17px;
+
+    label {
+        font-size: 20px;
+    }
+}
+
+::ng-deep .multiselect-dropdown {
+    .dropdown-list {
+        li {
+            padding: 10px 10px !important;
+            border-bottom: 1px solid lightgray;
+        }
+    }
+
+    .dropdown-btn {
+        font-weight: 600 !important;
+
+        .dropdown-multiselect__caret {
+            top: 11px !important;
+        }
+
+        .selected-item {
+            max-width: none !important;
+            width: auto;
+            height: 40px;
+
+            a {
+                padding-left: 15px !important;
+                // color: white;
+                padding-top: 7px;
+            }
+
+            span {
+                margin-top: 8px;
+            }
+        }
+
+    }
+}
+
+.inventory_create_page {
+
+    .mainBody {
+        height: 300px;
+    }
+
+
+
+
+
+
+
+
+}
+
+
+
+@media screen and (max-width: 576px) {
+    // .product-item {
+    //     flex-wrap: wrap;
+
+    //     .image-container {
+    //         width: 100%;
+    //         text-align: center;
+    //     }
+
+    //     img {
+    //         margin: 0 0 1rem 0;
+    //         width: 100px;
+    //     }
+    // }
+}

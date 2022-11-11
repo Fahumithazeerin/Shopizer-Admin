@@ -50,11 +50,11 @@ const IsCustomer = () => {
 
 const isCategoryManagementVisible = () => {
   if ('MARKETPLACE' === environment.mode) {
-    if (IsSuperadmin()) {
+    if (IsSuperadmin()|| IsAdmin()) {
       return true;
     }
   } else {//Normal multi stores
-    if (IsAdminRetail() || IsAdmin()) {
+    if (IsAdminRetail()) {
       return true;
     } else {
       'Not admin retail'
@@ -515,6 +515,20 @@ export const MENU_ITEMS: MenuItem[] = [
         key: 'COMPONENTS.REGISTERED_SELLER',
         link: '/pages/seller/list',
         guards: [IsSuperadmin, IsAdmin]
+      },
+      {
+        title: 'COMPONENTS.PRODUCT_LISTING',
+        key: 'COMPONENTS.PRODUCT_LISTING',
+        link: '/pages/seller/list',
+        guards: [IsAdmin],
+        children: [ 
+          {
+            title: 'COMPONENTS.PRODUCTS_LIST',
+            key: 'COMPONENTS.PRODUCTS_LIST',
+            link: '/pages/seller/seller-products/products-list',
+            guards: [IsAdmin]
+          }
+        ]
       }
     ]
     
