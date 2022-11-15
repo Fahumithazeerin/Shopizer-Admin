@@ -1,0 +1,53 @@
+<!-- <nb-card size="large">
+  <nb-tabset>
+    <nb-tab tabTitle="List of orders">
+      <router-outlet></router-outlet>
+    </nb-tab>
+  </nb-tabset>
+</nb-card> -->
+
+<div class="page-content">
+    <div class="page-body">
+        <nb-card class="page-card inner_pages">
+            <!-- <div *ngIf="loadingList" class="loading-block" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary"></div> -->
+            <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary" class="sellerList">
+              <div class="inner_pages_legacy">
+                <nb-card-header class="main_header">
+                  <h1 class="page_title">{{ 'COMPONENTS.ORDERS' | translate }}</h1>
+                  <div class="content_spacing_empty"></div>
+          
+                </nb-card-header>
+                
+                <mat-tab-group (selectedTabChange)="tabChanged($event)">
+                    <mat-tab label="Open">
+                   <br>
+                        <button *ngFor="let button of buttons" class="btn btn-dark" nbButton size="small"
+                                [ngClass]="(selectedButton == button) ? 'active' : 'inactive'" (click)="toggleSelect(button)">
+                            <i [class]="button.class"></i>
+                            {{button.name}}
+                        </button>
+                        &nbsp;
+                       <!-- <button (click)="toggle()" id="due" nbButton outline  size="small" >Due Today</button>-->
+                <ng2-smart-table [settings]="settings" [source]="opensource" (custom)="route($event)" class="home-table">
+                </ng2-smart-table>
+                
+                <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage"
+                  [count]="totalCount" class="home-table">
+                 
+                </ngx-paginator>
+                </mat-tab>
+                    <mat-tab label="Closed">
+                    <ng2-smart-table [settings]="settings" [source]="closedsource" (custom)="route($event)" class="home-table">
+                    </ng2-smart-table>
+              
+                    <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage"
+                      [count]="totalCount" class="home-table">
+                    </ngx-paginator>
+                </mat-tab>
+            </mat-tab-group>
+              </div>
+            </nb-card-body>
+          </nb-card>
+      <router-outlet></router-outlet>
+    </div>
+  </div>

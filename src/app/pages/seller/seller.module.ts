@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { SellerRoutingModule } from './seller-routing.module';
 import { SellerComponent } from './seller.component';
@@ -10,15 +11,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { SellerListComponent } from './seller-list/seller-list.component';
 import { NbDialogModule } from '@nebular/theme';
 import { SellerDetailEditComponent } from './seller-detail-edit/seller-detail-edit.component';
-
-
+import { ProductsComponent } from './seller-products/products.component';
+import { ProductsListComponent } from './seller-products/products-list/products-list.component';
+import { ProductCreationComponent } from './seller-products/product-creation/product-creation.component';
+import { ProductOrderListComponent } from './order-management/order-management.component';
 import { CustomModule } from '../custom-component/custom.module';
 
 import { NgxSummernoteModule } from 'ngx-summernote';
 import { AvailableButtonComponent } from './seller-products/products-list/available-button.component';
-
-
-
 
 @NgModule({
   declarations: [
@@ -26,8 +26,13 @@ import { AvailableButtonComponent } from './seller-products/products-list/availa
     RegisterComponent,
     SellerListComponent,
     SellerDetailEditComponent,
+    ProductsComponent,
+    ProductFormComponent,
+    ProductsListComponent,
+    ProductCreationComponent,
+    AvailableButtonComponent,
+    ProductOrderListComponent
 
-    
   ],
   //entryComponents: [AvailableButtonComponent],
   imports: [
@@ -36,6 +41,8 @@ import { AvailableButtonComponent } from './seller-products/products-list/availa
     SharedModule,
     FormsModule,
     CustomModule,
+    MatTabsModule,
+    MatButtonModule,
     NgxSummernoteModule,
     HttpClientModule,
     NbDialogModule.forChild()

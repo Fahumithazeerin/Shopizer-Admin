@@ -1,21 +1,28 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation ,Inject} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { StorageService } from '../../shared/services/storage.service';
 import { StoreService } from '../../store-management/services/store.service';
-import { OrdersService } from '../services/orders.service';
+import { SellerOrderService } from '../../shared/services/seller-order.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Router } from '@angular/router';
 // import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
 import { TranslateService } from '@ngx-translate/core';
 import { error } from '@angular/compiler/src/util';
+import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
+import { DOCUMENT } from '@angular/common';
+
+import * as internal from 'stream';
+
 @Component({
-  selector: 'ngx-order-list',
-  templateUrl: './order-list.component.html',
-  styleUrls: ['./order-list.component.scss']
+  selector: 'ngx-order-management',
+  templateUrl: './order-management.component.html',
+  styleUrls: ['./order-management.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class OrderListComponent implements OnInit {
+export class ProductOrderListComponent implements OnInit {
   @ViewChild('item', { static: false }) accordion;
-  source: LocalDataSource = new LocalDataSource();
+  opensource: LocalDataSource = new LocalDataSource(); 
+  closedsource: LocalDataSource = new LocalDataSource();
   loadingList = false;
   settings = {};
   stores: Array<any> = [];
@@ -27,12 +34,13 @@ export class OrderListComponent implements OnInit {
   roles;
   // searchValue: string = '';
   isSuperAdmin: boolean;
-
   timeoutHandler: any;
+  isPast=true;
   params = this.loadParams();
 
   constructor(
-    private ordersService: OrdersService,
+  @Inject(DOCUMENT) private document: Document,
+    private ordersService: SellerOrderService,
     private router: Router,
     // private mScrollbarService: MalihuScrollbarService,
     private translate: TranslateService,
@@ -55,10 +63,9 @@ export class OrderListComponent implements OnInit {
   ngOnInit() {
     this.getOrderList();
     this.translate.onLangChange.subscribe((lang) => {
-      this.params.lang = this.storageService.getLanguage();
       this.getOrderList();
     });
-    this.source.onChanged().subscribe((change) => {
+    this.opensource.onChanged().subscribe((change) => {
       if (change.action == 'refresh' || change.action == 'load') {
         clearTimeout(this.timeoutHandler);
       } else {
@@ -90,10 +97,46 @@ export class OrderListComponent implements OnInit {
 
     });
   }
+buttons= [
+  {class: "fa fa-long-arrow-up", name: "Past Due"},
+  {class: "fa fa-long-arrow-down", name: "Due Today"},
+]
+selectedButton;
+toggleSelect(button) {
+
+    if (button == this.selectedButton) {
+        this.selectedButton = undefined
+    } else {
+        this.selectedButton = button
+    }
+}
+//   toggle()
+//   {
+//         const past =  this.document.getElementById("past");
+//         const due = this.document.getElementById("due");
+//         console.log(due.innerHTML);
+//
+//         if(!past.classList.contains("active") && this.isPast){
+//             past.classList.add("active");
+//             due.classList.remove("active");
+//         }
+//         else{
+//         this.isPast = false
+//         }
+//        if(!due.classList.contains("active") && !this.isPast){
+//             due.classList.add("active");
+//             past.classList.remove("active");
+//         }else
+//         {
+//         this.isPast=true;
+//         }
+//     }
+  tabChanged(tabChangeEvent: MatTabChangeEvent): void {  
+    let index = tabChangeEvent.index;
+    this.setSettings(index);
+  }
   loadParams() {
     return {
-      store: this.storageService.getMerchant(),
-      lang: this.storageService.getLanguage(),
       count: this.perPage,
       page: 0
     };
@@ -102,25 +145,36 @@ export class OrderListComponent implements OnInit {
     this.params.page = this.currentPage;
 
     this.loadingList = true;
-    this.ordersService.getOrders(this.params)
+    this.ordersService.getsOrders()
       .subscribe(orders => {
         this.loadingList = false;
         if (orders.orders && orders.orders.length !== 0) {
-          this.source.load(orders.orders);
+          var all_orders = orders.orders
+          var openorders = all_orders.filter(a=>!(a.orderStatus === 'CANCELED' || a.orderStatus === 'DELIVERED') )
+          if(openorders && openorders.length !== 0)
+            this.opensource.load(openorders);
+          else
+            this.opensource.load([]);
+          var closedorders = all_orders.filter(a=>a.orderStatus === 'CANCELED' || a.orderStatus === 'DELIVERED')
+          if(closedorders && closedorders.length !== 0)
+            this.closedsource.load(closedorders);
+          else
+          this.closedsource.load([]);
         } else {
-          this.source.load([]);
+          this.closedsource.load([]);
+          this.opensource.load([]);
         }
-
-        this.totalCount = (orders.length);
+        this.totalCount = orders.total;
       }, error => {
+        
         this.loadingList = false;
-        this.source.load([]);
+        this.opensource.load([]);
       });
-
     this.setSettings();
   }
 
-  setSettings() {
+  
+  setSettings(index = 0) {
     var me = this;
     this.settings = {
       // mode: 'external',
@@ -210,13 +264,16 @@ export class OrderListComponent implements OnInit {
             type: 'list',
             config: {
               selectText: this.translate.instant('ORDER.SHOWALL'),
-              list: [
+              list:  index == 1 ?
+              [
+                { value: 'DELIVERED', title: this.translate.instant('ORDER.DELIVERED') },
+                { value: 'CANCELED', title: this.translate.instant('ORDER.CANCELED') },
+            ] :  [
                 { value: 'ORDERED', title: this.translate.instant('ORDER.ORDERED') },
                 { value: 'PROCESSED', title: this.translate.instant('ORDER.PROCESSED') },
-                { value: 'DELIVERED', title: this.translate.instant('ORDER.DELIVERED') },
                 { value: 'REFUNDED', title: this.translate.instant('ORDER.REFUNDED') },
-                { value: 'CANCELED', title: this.translate.instant('ORDER.CANCELED') },
               ]
+             
             }
           }
         }
@@ -253,14 +310,13 @@ export class OrderListComponent implements OnInit {
   }
 
   onSelectStore(e) {
-    this.params["store"] = e;
-
+    this.params["store"] = e.value;
     this.getOrderList();
   }
 
   route(e) {
     localStorage.setItem('orderID', e.data.id);
-    this.router.navigate(['pages/orders/order-details']);
+    this.router.navigate(['pages/seller/order-list']);
   }
 
 }

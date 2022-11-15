@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { CrudService } from '../../shared/services/crud.service';
+import { param } from 'jquery';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +17,13 @@ export class OrdersService {
   }
 
   getOrders(params): Observable<any> {
-    // const params = {
-    //   'count': '50',
-    //   'start': '0'arams
-    // };
+     /* params = {
+      'count': '50',
+      'start': '0',
+      'store': localStorage.getItem('merchant')
+     }; */
+     params.store = localStorage.getItem('merchant');
+     console.log(params+"ndiuc")
     return this.crudService.get('/v1/private/orders', params);
   }
   getOrderDetails(orderID): Observable<any> {
