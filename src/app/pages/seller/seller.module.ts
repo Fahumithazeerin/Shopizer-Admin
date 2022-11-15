@@ -16,7 +16,7 @@ import { ProductsListComponent } from './seller-products/products-list/products-
 import { ProductCreationComponent } from './seller-products/product-creation/product-creation.component';
 import { ProductOrderListComponent } from './order-management/order-management.component';
 import { CustomModule } from '../custom-component/custom.module';
-import { ProductFormComponent } from './seller-products/product-form/product-form.component';
+
 import { NgxSummernoteModule } from 'ngx-summernote';
 import { AvailableButtonComponent } from './seller-products/products-list/available-button.component';
 
@@ -32,8 +32,9 @@ import { AvailableButtonComponent } from './seller-products/products-list/availa
     ProductCreationComponent,
     AvailableButtonComponent,
     ProductOrderListComponent
+
   ],
-  entryComponents: [AvailableButtonComponent],
+  //entryComponents: [AvailableButtonComponent],
   imports: [
     CommonModule,
     SellerRoutingModule,
