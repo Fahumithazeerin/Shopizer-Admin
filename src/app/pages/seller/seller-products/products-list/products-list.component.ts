@@ -85,7 +85,7 @@ export class ProductsListComponent implements OnInit {
     };
   }
 
-  private disabled()
+  public disabled()
   {
     if(this.isSuperadmin == true)
     {

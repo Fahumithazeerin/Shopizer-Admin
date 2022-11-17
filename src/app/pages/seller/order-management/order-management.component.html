@@ -19,17 +19,23 @@
                 </nb-card-header>
                 
                 <mat-tab-group (selectedTabChange)="tabChanged($event)">
+                  <br>
                     <mat-tab label="Open">
+                      <mat-tab-group>
+                        <mat-tab label="Due Today"> 
+                          <ng2-smart-table [settings]="settings" [source]="todayOrders" (custom)="route($event)" class="home-table">
+                          </ng2-smart-table>
+                        </mat-tab>
+                        <mat-tab label="Past Due"> 
+                          <ng2-smart-table [settings]="settings" [source]="pastOrders" (custom)="route($event)" class="home-table">
+                          </ng2-smart-table>
+                        </mat-tab>
+                      </mat-tab-group>
                    <br>
-                        <button *ngFor="let button of buttons" class="btn btn-dark" nbButton size="small"
-                                [ngClass]="(selectedButton == button) ? 'active' : 'inactive'" (click)="toggleSelect(button)">
-                            <i [class]="button.class"></i>
-                            {{button.name}}
-                        </button>
+                        
                         &nbsp;
                        <!-- <button (click)="toggle()" id="due" nbButton outline  size="small" >Due Today</button>-->
-                <ng2-smart-table [settings]="settings" [source]="opensource" (custom)="route($event)" class="home-table">
-                </ng2-smart-table>
+               
                 
                 <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage"
                   [count]="totalCount" class="home-table">

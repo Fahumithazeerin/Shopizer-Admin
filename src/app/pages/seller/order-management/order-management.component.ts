@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation ,Inject} from '@angular/core';
 import { DatePipe } from '@angular/common';
+import {formatDate} from '@angular/common';
 import { StorageService } from '../../shared/services/storage.service';
 import { StoreService } from '../../store-management/services/store.service';
 import { SellerOrderService } from '../../shared/services/seller-order.service';
@@ -17,14 +18,18 @@ import * as internal from 'stream';
   selector: 'ngx-order-management',
   templateUrl: './order-management.component.html',
   styleUrls: ['./order-management.component.scss'],
+  providers: [DatePipe],
   encapsulation: ViewEncapsulation.None
 })
 export class ProductOrderListComponent implements OnInit {
   @ViewChild('item', { static: false }) accordion;
   opensource: LocalDataSource = new LocalDataSource(); 
   closedsource: LocalDataSource = new LocalDataSource();
+  todayOrders: LocalDataSource = new LocalDataSource();
+  pastOrders: LocalDataSource = new LocalDataSource();
   loadingList = false;
   settings = {};
+  myDate: Date;
   stores: Array<any> = [];
   selectedStore: String = '';
   // paginator
@@ -38,7 +43,9 @@ export class ProductOrderListComponent implements OnInit {
   isPast=true;
   params = this.loadParams();
 
+  
   constructor(
+    private datePipe: DatePipe,
   @Inject(DOCUMENT) private document: Document,
     private ordersService: SellerOrderService,
     private router: Router,
@@ -145,12 +152,25 @@ toggleSelect(button) {
     this.params.page = this.currentPage;
 
     this.loadingList = true;
+    var myDate = new Date();
     this.ordersService.getsOrders()
       .subscribe(orders => {
         this.loadingList = false;
         if (orders.orders && orders.orders.length !== 0) {
           var all_orders = orders.orders
+          var value = formatDate(new Date(), 'yyyy-MM-dd', 'en');
           var openorders = all_orders.filter(a=>!(a.orderStatus === 'CANCELED' || a.orderStatus === 'DELIVERED') )
+          var todayorderslist = openorders.filter(a=>(a.datePurchased === formatDate(new Date(), 'yyyy-MM-dd', 'en')))
+          var pastorderslist = openorders.filter(a=>(a.datePurchased !== formatDate(new Date(), 'yyyy-MM-dd', 'en')))
+          if(todayorderslist && todayorderslist.length !== 0)
+            this.todayOrders.load(todayorderslist);
+          else
+            this.todayOrders.load([])
+          if(pastorderslist && pastorderslist.length !== 0)
+            this.pastOrders.load(pastorderslist);
+          else
+            this.pastOrders.load([])
+          
           if(openorders && openorders.length !== 0)
             this.opensource.load(openorders);
           else
