@@ -69,7 +69,7 @@ export class ProductsListComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
   ) {
-    this.selectedStore = this.storageService.getSellerId()
+    this.selectedStore = this.storageService.getSeller();
     this.isSuperadmin = this.storageService.getUserRoles().isSuperadmin;
     this.isAdmin = this.storageService.getUserRoles().isAdmin;
     this.listingService = new ListingService();
@@ -77,7 +77,7 @@ export class ProductsListComponent implements OnInit {
 
   loadParams() {
     return {
-      seller: this.storageService.getSellerId(),
+      seller: this.storageService.getSeller(),
       lang: this.storageService.getLanguage(),
       count: this.perPage,
       origin: "admin", //does not load attributes in listing
