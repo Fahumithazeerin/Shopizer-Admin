@@ -42,7 +42,7 @@ jobs:
       - run:
           name: Run Talisman
           # || true to ensure that the following steps can carry on irrespective of the success/failure of this step
-          command: ~/.talisman/talisman_linux_386 --scanWithHtml || true
+          command: ~/.talisman/talisman_linux_386 --scanWithHtml
 
       # Save Talisman Reports
       - store_artifacts:
