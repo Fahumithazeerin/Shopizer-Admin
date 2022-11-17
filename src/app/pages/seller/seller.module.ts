@@ -10,6 +10,7 @@ import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SellerListComponent } from './seller-list/seller-list.component';
 import { NbDialogModule } from '@nebular/theme';
+import { SellerProductsModule } from './seller-products/seller-products.module';
 import { SellerDetailEditComponent } from './seller-detail-edit/seller-detail-edit.component';
 import { ProductsComponent } from './seller-products/seller-products.component';
 import { ProductsListComponent } from './seller-products/products-list/products-list.component';
@@ -19,18 +20,19 @@ import { CustomModule } from '../custom-component/custom.module';
 import { ProductFormComponent } from './seller-products/product-form/product-form.component';
 import { NgxSummernoteModule } from 'ngx-summernote';
 import { AvailableButtonComponent } from './seller-products/products-list/available-button.component';
-
+ 
 @NgModule({
   declarations: [
     SellerComponent,
     RegisterComponent,
     SellerListComponent,
     SellerDetailEditComponent,
-    ProductsComponent,
-    ProductFormComponent,
-    ProductsListComponent,
-    ProductCreationComponent,
-    AvailableButtonComponent,
+    SellerComponent,
+   /// ProductsComponent,
+    //ProductFormComponent,
+    //ProductsListComponent,
+    //ProductCreationComponent,
+    //AvailableButtonComponent,
     ProductOrderListComponent
 
   ],
@@ -45,6 +47,7 @@ import { AvailableButtonComponent } from './seller-products/products-list/availa
     MatButtonModule,
     NgxSummernoteModule,
     HttpClientModule,
+    SellerProductsModule,
     NbDialogModule.forChild()
   ]
 })
