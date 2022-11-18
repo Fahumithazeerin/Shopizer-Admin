@@ -1,6 +1,7 @@
 version: 2.0
 orbs:
   node: circleci/node@5.0.2
+
 jobs:
   scan-using-sonarqube:
     machine:
@@ -42,7 +43,7 @@ jobs:
       - run:
           name: Run Talisman
           # || true to ensure that the following steps can carry on irrespective of the success/failure of this step
-          command: ~/.talisman/talisman_linux_386 --scanWithHtml || true
+          command: ~/.talisman/talisman_linux_386 --scanWithHtml
 
       # Save Talisman Reports
       - store_artifacts:
@@ -61,7 +62,7 @@ jobs:
           command: |
             curl --header "Content-Type: application/json" \
             --request POST \
-            --data $CHAT_WEBHOOK_SUCCESS_HTML_MESSAGE \
+            --data "{\"cards\":[{\"header\":{\"title\":\"${CIRCLE_JOB} successful.\",\"subtitle\":\"${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}\",\"imageUrl\":\"https://png.pngtree.com/svg/20170510/success_404253.png\",\"imageStyle\":\"IMAGE\"},\"sections\":[{\"widgets\":[{\"keyValue\":{\"topLabel\":\"${CIRCLE_TAG}\",\"content\":\"Credits - ${CIRCLE_USERNAME}\"}}]},{\"widgets\":[{\"buttons\":[{\"textButton\":{\"text\":\"DETAILS\",\"onClick\":{\"openLink\":{\"url\":\"${CIRCLE_BUILD_URL}\"}}}}]}]}]}]}" \
             "$CHAT_WEBHOOK_URL"
       - run:
           name: On pipeline FAILURE, notify in Google Space
@@ -69,41 +70,24 @@ jobs:
           command: |
             curl --header "Content-Type: application/json" \
             --request POST \
-            --data $CHAT_WEBHOOK_FAILURE_HTML_MESSAGE \
+            --data "{\"cards\":[{\"header\":{\"title\":\"Oops. ${CIRCLE_JOB} failed.\",\"subtitle\":\"${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}\",\"imageUrl\":\"https://png.pngtree.com/svg/20170406/icon_failed__1325447.png\",\"imageStyle\":\"IMAGE\"},\"sections\":[{\"widgets\":[{\"keyValue\":{\"topLabel\":\"${CIRCLE_TAG}\",\"content\":\"Credits - ${CIRCLE_USERNAME}\"}}]},{\"widgets\":[{\"buttons\":[{\"textButton\":{\"text\":\"DETAILS\",\"onClick\":{\"openLink\":{\"url\":\"${CIRCLE_BUILD_URL}\"}}}}]}]}]}]}" \
             "$CHAT_WEBHOOK_URL"
-  build:
-    executor: node/default
-    working_directory: ~/Retail---Marketplace-SellerPortalFrontEnd
-    steps:
-      # Pulls the code from git repo
-      - checkout
-      # Take the compiled code and package it in its distributable format, such as a JAR.
-      - run:
-          name: Build App
-          command: npm run build
-  test:
-    executor: node/default
-    working_directory: ~/Retail---Marketplace-SellerPortalFrontEnd
-    steps:
-      # Pulls the code from git repo
-      - checkout
-      # Test the compiled source code using a suitable unit testing framework
-      - run: npm run test
 
 workflows:
   version: 2
   test_and_build:
     jobs:
-      - scan-using-talisman
-      - scan-using-sonarqube:
-          requires:
-            - scan-using-talisman
-      - test:
+      # - scan-using-talisman
+      # - scan-using-sonarqube:
+      #     requires:
+      #       - scan-using-talisman
+      - scan-using-sonarqube
+      - node/test
           requires:
             - scan-using-sonarqube
-      - build:
+      - node/run
           requires:
-            - test
+            - node/test
       - notify:
           requires:
-            - build
+            - node/run
