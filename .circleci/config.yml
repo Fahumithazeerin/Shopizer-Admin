@@ -102,9 +102,10 @@ workflows:
   test_and_build:
     jobs:
       # - scan-using-talisman
-      - scan-using-sonarqube:
-          # requires:
-          #   - scan-using-talisman
+      # - scan-using-sonarqube:
+      #     requires:
+      #       - scan-using-talisman
+      - scan-using-sonarqube
       - test:
           requires:
             - scan-using-sonarqube
