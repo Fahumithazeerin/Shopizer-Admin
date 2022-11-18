@@ -1,12 +1,12 @@
 # Shopizer Administration (shopizer-admin) Angular web app
 
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/twlabs/Retail---Marketplace-SellerPortalFrontEnd/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/twlabs/Retail---Marketplace-SellerPortalFrontEnd/tree/main)
+
 ## Tested with node v12.22.7
 
 Requires Angular cli installed (npm install -g @angular/cli@13.3.x)
 
 # Set backend api
-
-
 
 ## Run locally
 
@@ -17,7 +17,8 @@ ng serve -o
 http://localhost:4200
 
 ## Build app
-ng build 
+
+ng build
 
 ## Run docker images
 
