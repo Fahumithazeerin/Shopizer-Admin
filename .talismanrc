@@ -1,0 +1,4 @@
+fileignoreconfig:
+  - filename: .circleci/config.yml
+    checksum: e9448e98de5b7248ed673aa620e50b9998cd8e92f339515bdbbe8001ff923227
+version: ""

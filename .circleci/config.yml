@@ -61,7 +61,7 @@ jobs:
           command: |
             curl --header "Content-Type: application/json" \
             --request POST \
-            --data $CHAT_WEBHOOK_SUCCESS_HTML_MESSAGE \
+            --data "{"cards":[{"header":{"title":"${CIRCLE_JOB} successful.","subtitle":"${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}","imageUrl":"https://png.pngtree.com/svg/20170510/success_404253.png","imageStyle":"IMAGE"},"sections":[{"widgets":[{"keyValue":{"topLabel":"${CIRCLE_TAG}","content":"Credits - ${CIRCLE_USERNAME}"}}]},{"widgets":[{"buttons":[{"textButton":{"text":"DETAILS","onClick":{"openLink":{"url":"${CIRCLE_BUILD_URL}"}}}}]}]}]}]}" \
             "$CHAT_WEBHOOK_URL"
       - run:
           name: On pipeline FAILURE, notify in Google Space
@@ -69,7 +69,7 @@ jobs:
           command: |
             curl --header "Content-Type: application/json" \
             --request POST \
-            --data $CHAT_WEBHOOK_FAILURE_HTML_MESSAGE \
+            --data "{"cards":[{"header":{"title":"Oops. ${CIRCLE_JOB} failed.","subtitle":"${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}","imageUrl":"https://png.pngtree.com/svg/20170406/icon_failed__1325447.png","imageStyle":"IMAGE"},"sections":[{"widgets":[{"keyValue":{"topLabel":"${CIRCLE_TAG}","content":"Credits - ${CIRCLE_USERNAME}"}}]},{"widgets":[{"buttons":[{"textButton":{"text":"DETAILS","onClick":{"openLink":{"url":"${CIRCLE_BUILD_URL}"}}}}]}]}]}]}" \
             "$CHAT_WEBHOOK_URL"
   build:
     executor: node/default
@@ -88,16 +88,23 @@ jobs:
       # Pulls the code from git repo
       - checkout
       # Test the compiled source code using a suitable unit testing framework
-      - run: npm run test
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          command: npm run test
+          name: Run tests for Shopizer Admin
+      - run:
+          command: npm run build
+          name: Build app for Shopizer Admin
 
 workflows:
   version: 2
   test_and_build:
     jobs:
-      - scan-using-talisman
+      # - scan-using-talisman
       - scan-using-sonarqube:
-          requires:
-            - scan-using-talisman
+          # requires:
+          #   - scan-using-talisman
       - test:
           requires:
             - scan-using-sonarqube
