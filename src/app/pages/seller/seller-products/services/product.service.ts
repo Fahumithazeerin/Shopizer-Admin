@@ -43,7 +43,8 @@ export class ProductService {
 
   getProductDefinitionById(id): Observable<any> {
     const params = {
-      lang: '_all'
+      lang: '_all',
+      seller: this.storageService.getSeller()
     };
     return this.crudService.get(`/v2/private/seller/product/definition/${id}`, params);
   }
