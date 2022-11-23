@@ -21,8 +21,11 @@ export class ProductImageService {
     return this.crudService.getBaseUrl() + `/v1/private/seller/products/${id}/images`;
   }
 
-  getImages(productId): Observable<any> {
-    return this.crudService.get(`/v1/seller/products/${productId}/images`);
+  getImages(productId,code): Observable<any> {
+    const params = {
+      seller : code
+    };
+    return this.crudService.get(`/v1/seller/products/${productId}/images`, params);
   }
 
   removeImage(productId, imageId): Observable<any> {

@@ -19,6 +19,7 @@ export class ProductsImagesComponent implements OnInit {
   // product: any;
   images : any;
   id : any;
+  seller : any;
   loaded = false;
   loading = false;
 
@@ -36,7 +37,8 @@ export class ProductsImagesComponent implements OnInit {
     private productImageService: ProductImageService,
     private productService: ProductService,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
 
   ) {
 
@@ -45,6 +47,7 @@ export class ProductsImagesComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.productService.getProductIdRoute(this.router,this.location);
+    this.seller = this.activatedRoute.parent.snapshot.paramMap.get('code');
     this.load();
     //specify add image url to image component
     this.addImageUrlComponent = this.productImageService.addImageUrl(this.id);
@@ -57,7 +60,7 @@ export class ProductsImagesComponent implements OnInit {
 
   load() {
     this.loading = true;
-    this.productImageService.getImages(this.id)
+    this.productImageService.getImages(this.id,this.seller)
     .subscribe(res => {
       this.images = res;
       this.loading = false;
