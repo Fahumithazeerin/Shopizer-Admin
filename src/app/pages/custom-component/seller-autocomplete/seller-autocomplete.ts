@@ -54,7 +54,4 @@ export class sellerAutoCompleteComponent implements OnInit {
     //     this.onInputChange.emit(value);
     //   }
 
-
-
-
 }
