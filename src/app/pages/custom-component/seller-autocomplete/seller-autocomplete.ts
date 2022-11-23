@@ -46,7 +46,6 @@ export class sellerAutoCompleteComponent implements OnInit {
     }
 
     onSelectStore(event) {
-        console.log(event)
         this.onStore.emit(event);
     }
 
