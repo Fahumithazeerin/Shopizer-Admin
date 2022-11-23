@@ -317,7 +317,7 @@ export class ProductsListComponent implements OnInit {
     if (e.action == 'remove') {
       this.deleteRecord(e)
     } else {
-      this.router.navigate(['pages/seller/seller-products/product/' + e.data.id]);
+      this.router.navigate(['pages/seller/seller-products/product/' + e.data.id + '/'+this.params.seller]);
     }
   }
 }

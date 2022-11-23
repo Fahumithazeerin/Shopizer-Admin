@@ -33,7 +33,7 @@ const routes: Routes = [
         component: ProductOrderingComponent
       },
       {
-        path: 'product/:id',
+        path: 'product/:id/:code',
         // canDeactivate: [ExitGuard],
         component: ProductDetailsComponent,
 

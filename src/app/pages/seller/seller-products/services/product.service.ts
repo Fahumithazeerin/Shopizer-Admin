@@ -29,7 +29,7 @@ export class ProductService {
 
   updateProduct(id, product): Observable<any> {
     const params = {
-      seller: this.storageService.getMerchant()
+      seller: this.storageService.getSeller()
     };
     return this.crudService.put(`/v2/private/seller/product/definition/${id}`, product, { params });
   }
@@ -49,9 +49,17 @@ export class ProductService {
     return this.crudService.get(`/v2/private/seller/product/definition/${id}`, params);
   }
 
+  getProductDefinitionByIdAndCode(id,code): Observable<any> {
+    const params = {
+      lang: '_all',
+      seller: code
+    };
+    return this.crudService.get(`/v2/private/seller/product/definition/${id}`, params);
+  }
+
   createProduct(product): Observable<any> {
     const params = {
-      seller: this.storageService.getSellerId()
+      seller: this.storageService.getSeller()
     };
     return this.crudService.post(`/v2/private/seller/product/definition`, product, { params });
   }
