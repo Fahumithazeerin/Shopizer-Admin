@@ -33,6 +33,9 @@ export interface TabItem {
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.scss']
 })
+
+
+
 export class ProductFormComponent implements OnInit {
   @Input() product: any;
   @Input() _title: string;
@@ -45,6 +48,7 @@ export class ProductFormComponent implements OnInit {
   languages = [];
   typesCount = 15;
   productTypes = [];
+  isSuperAdmin : boolean;
   selectedItem = '0';
   defaultLanguage = localStorage.getItem('lang');
   //changed from seo section
@@ -121,6 +125,18 @@ export class ProductFormComponent implements OnInit {
     private storageService: StorageService
   ) {
   }
+
+  public disabled()
+  {
+    if(this.isSuperAdmin == true)
+    {
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+  
 
   ngOnInit() {
 
@@ -398,6 +414,7 @@ export class ProductFormComponent implements OnInit {
   //       });
   //   });
   // }
+
 
   save() {
     this.form.markAllAsTouched();
